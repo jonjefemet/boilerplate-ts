@@ -2,7 +2,24 @@
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
   "sourceRoot": "src",
-  "compilerOptions": {
-    "deleteOutDir": true
+  "monorepo": true,
+  "projects": {
+    "auth": {
+      "type": "application",
+      "root": "src/apps/auth",
+      "entryFile": "main",
+      "sourceRoot": "src/apps/auth"
+    },
+    "pokemon": {
+      "type": "application",
+      "root": "src/apps/pokemon",
+      "entryFile": "main",
+      "sourceRoot": "src/apps/pokemon"
+    },
+    "shared": {
+      "type": "library",
+      "root": "src/contexts/shared",
+      "sourceRoot": "src/contexts/shared"
+    }
   }
 }

@@ -1,4 +1,4 @@
-const Operators = {
+const Operator = {
   EQUAL: '=',
   NOT_EQUAL: '!=',
   GT: '>',
@@ -7,6 +7,6 @@ const Operators = {
   NOT_CONTAINS: 'NOT_CONTAINS',
 } as const;
 
-type Operators = (typeof Operators)[keyof typeof Operators];
+type Operator = (typeof Operator)[keyof typeof Operator];
 
-export { Operators };
+export { Operator };
