@@ -8,20 +8,16 @@
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json",
     "start:auth": "nest start --project auth",
-    "start:pokemon": "nest start --project pokemon",
     "build:auth": "nest build --project auth",
-    "build:pokemon": "nest build --project pokemon"
+    "test:auth": "jest --config ./src/apps/auth/test/jest-e2e.json"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
