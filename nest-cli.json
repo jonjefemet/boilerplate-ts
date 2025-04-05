@@ -4,22 +4,23 @@
   "sourceRoot": "src",
   "monorepo": true,
   "projects": {
-    "auth": {
-      "type": "application",
-      "root": "src/apps/auth",
-      "entryFile": "main",
-      "sourceRoot": "src/apps/auth"
-    },
-    "pokemon": {
-      "type": "application",
-      "root": "src/apps/pokemon",
-      "entryFile": "main",
-      "sourceRoot": "src/apps/pokemon"
-    },
     "shared": {
       "type": "library",
       "root": "src/contexts/shared",
-      "sourceRoot": "src/contexts/shared"
+      "entryFile": "index",
+      "sourceRoot": "src/contexts/shared/src",
+      "compilerOptions": {
+        "tsConfigPath": "src/contexts/shared/tsconfig.lib.json"
+      }
+    },
+    "utils": {
+      "type": "library",
+      "root": "src/utils",
+      "entryFile": "index",
+      "sourceRoot": "src/utils/src",
+      "compilerOptions": {
+        "tsConfigPath": "src/utils/tsconfig.lib.json"
+      }
     }
   }
 }

@@ -17,7 +17,9 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "start:auth": "nest start --project auth",
     "build:auth": "nest build --project auth",
-    "test:auth": "jest --config ./src/apps/auth/test/jest-e2e.json"
+    "test:auth": "jest --config ./src/apps/auth/test/jest-e2e.json",
+    "build:shared": "nest build shared",
+    "build:utils": "nest build utils"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
