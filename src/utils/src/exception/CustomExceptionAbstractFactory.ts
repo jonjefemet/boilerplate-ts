@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
-import CustomError from './CustomError';
+import CustomError from './CustomException';
 import Exception from './Exception';
 import { ExceptionCategory } from '../constant/ExceptionCategory';
 import { ResponseException } from './ResponseError';
@@ -32,7 +32,7 @@ export abstract class CustomExceptionAbstractFactory
         .filter((line: string) => !line.includes('node_modules'))
         .join('\n');
     }
-    return this.stack || '';
+    return this.stack ?? '';
   }
 
   toString(): string {

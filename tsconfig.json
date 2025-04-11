@@ -24,6 +24,9 @@
       "@utils/*": [
         "./src/utils/src/*"
       ],
+      "@pokemon/*": [
+        "./src/contexts/pokemon/src/*"
+      ]
     }
   }
 }

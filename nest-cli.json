@@ -13,6 +13,15 @@
         "tsConfigPath": "src/contexts/shared/tsconfig.lib.json"
       }
     },
+    "pokemon": {
+      "type": "library",
+      "root": "src/contexts/pokemon",
+      "entryFile": "index",
+      "sourceRoot": "src/contexts/pokemon/src",
+      "compilerOptions": {
+        "tsConfigPath": "src/contexts/pokemon/tsconfig.lib.json"
+      }
+    },
     "utils": {
       "type": "library",
       "root": "src/utils",

@@ -17,15 +17,13 @@ type ValueObjectValue<T> = T extends StringValueObject
       ? boolean
       : T extends DateValueObject
         ? Date
-        : T extends { value: infer U }
-          ? U
-          : T extends Array<{ value: infer U }>
-            ? U[]
-            : T extends Array<infer U>
-              ? Array<ValueObjectValue<U>>
-              : T extends object
-                ? { [K in keyof Properties<T>]: ValueObjectValue<T[K]> }
-                : T;
+        : T extends Array<{ value: infer U }>
+          ? U[]
+          : T extends Array<infer U>
+            ? Array<ValueObjectValue<U>>
+            : T extends object
+              ? { [K in keyof Properties<T>]: ValueObjectValue<T[K]> }
+              : T;
 
 export type Primitives<T> = {
   [K in keyof Properties<T>]: ValueObjectValue<T[K]>;
