@@ -22,6 +22,15 @@
         "tsConfigPath": "src/contexts/pokemon/tsconfig.lib.json"
       }
     },
+    "pokedex": {
+      "type": "library",
+      "root": "src/contexts/pokedex",
+      "entryFile": "index",
+      "sourceRoot": "src/contexts/pokedex/src",
+      "compilerOptions": {
+        "tsConfigPath": "src/contexts/pokedex/tsconfig.lib.json"
+      }
+    },
     "utils": {
       "type": "library",
       "root": "src/utils",

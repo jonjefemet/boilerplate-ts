@@ -1,6 +1,6 @@
-import DomainObjectException from '@shared/domain/exception/DomainObjectException';
+import DomainException from '@shared/domain/exception/DomainException';
 
-export default class InvalidPokemonTypeException extends DomainObjectException {
+export default class InvalidPokemonTypeException extends DomainException {
   constructor(value: string) {
     super({
       code: 'INVALID_POKEMON_TYPE',

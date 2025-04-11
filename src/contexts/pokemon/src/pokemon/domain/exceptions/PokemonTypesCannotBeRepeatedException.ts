@@ -1,6 +1,6 @@
-import DomainObjectException from '@shared/domain/exception/DomainObjectException';
+import DomainException from '@shared/domain/exception/DomainException';
 
-export default class PokemonTypesCannotBeRepeatedException extends DomainObjectException {
+export default class PokemonTypesCannotBeRepeatedException extends DomainException {
   constructor() {
     super({
       code: 'POKEMON_TYPES_CANNOT_BE_REPEATED',

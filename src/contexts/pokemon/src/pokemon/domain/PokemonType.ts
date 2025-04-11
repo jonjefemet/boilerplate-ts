@@ -17,4 +17,8 @@ export default class PokemonType extends EnumValueObject<PokemonTypeEnum> {
   protected throwErrorForInvalidValue(): void {
     throw new InvalidPokemonTypeException(this.valueOf());
   }
+
+  public static from(value: string): PokemonType {
+    return new PokemonType(value as PokemonTypeEnum);
+  }
 }
