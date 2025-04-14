@@ -5,10 +5,11 @@ import PokedexPokemonSearcher from './PokedexPokemonSearcher';
 import PokedexPokemonResponse from '../PokedexPokemonResponse';
 import Log from '@utils/decorators/Log';
 import PokemonId from '@pokemon/pokemon/domain/PokemonId';
+import { Maybe } from '@utils/helper/Type';
 
 
 export default class SearchPokedexPokemonQueryHandler
-  implements QueryHandler<SearchPokedexPokemonQuery, PokedexPokemonResponse | null>
+  implements QueryHandler<SearchPokedexPokemonQuery, Maybe<PokedexPokemonResponse>>
 {
   constructor(
     private readonly pokedexPokemonSearcher: PokedexPokemonSearcher,
@@ -21,7 +22,7 @@ export default class SearchPokedexPokemonQueryHandler
   @Log()
   async handle(
     query: SearchPokedexPokemonQuery,
-  ): Promise<PokedexPokemonResponse | null> {
+  ): Promise<Maybe< PokedexPokemonResponse>> {
     const pokedexPokemon = await this.pokedexPokemonSearcher.search({
       pokemonId: new PokemonId(query.pokemonId),
     });
