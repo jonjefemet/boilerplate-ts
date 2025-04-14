@@ -2,7 +2,7 @@ import { HttpException, HttpStatus } from '@nestjs/common';
 import CustomError from './CustomException';
 import Exception from './Exception';
 import { ExceptionCategory } from '../constant/ExceptionCategory';
-import { ResponseException } from './ResponseError';
+import { ResponseException } from './ResponseException';
 
 export abstract class CustomExceptionAbstractFactory
   extends HttpException

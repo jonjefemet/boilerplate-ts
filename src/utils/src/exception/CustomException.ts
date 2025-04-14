@@ -1,5 +1,5 @@
 import Exception from './Exception';
-import { ResponseException } from './ResponseError';
+import { ResponseException } from './ResponseException';
 
 export default interface CustomError {
   exceptions: Exception[];
