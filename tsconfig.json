@@ -29,7 +29,13 @@
       ],
       "@pokemon/*": [
         "./src/contexts/pokemon/src/*"
-      ]
+      ],
+      "@pokedex/*": [
+        "./src/contexts/pokedex/src/*"
+      ],
+      "@test/*": [
+        "./test/*"
+      ],
     }
   }
 }

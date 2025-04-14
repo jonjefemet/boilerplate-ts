@@ -6,8 +6,9 @@ import PokedexPokemonResponse from '../PokedexPokemonResponse';
 import Log from '@utils/decorators/Log';
 import PokemonId from '@pokemon/pokemon/domain/PokemonId';
 
+
 export default class SearchPokedexPokemonQueryHandler
-  implements QueryHandler<SearchPokedexPokemonQuery, PokedexPokemonResponse>
+  implements QueryHandler<SearchPokedexPokemonQuery, PokedexPokemonResponse | null>
 {
   constructor(
     private readonly pokedexPokemonSearcher: PokedexPokemonSearcher,
@@ -20,15 +21,16 @@ export default class SearchPokedexPokemonQueryHandler
   @Log()
   async handle(
     query: SearchPokedexPokemonQuery,
-  ): Promise<PokedexPokemonResponse> {
+  ): Promise<PokedexPokemonResponse | null> {
     const pokedexPokemon = await this.pokedexPokemonSearcher.search({
       pokemonId: new PokemonId(query.pokemonId),
     });
 
-    if (!pokedexPokemon) {
-      throw new Error('Pokemon not found');
+    if ( !pokedexPokemon ) {
+      return null;
     }
 
+    
     return PokedexPokemonResponse.create(pokedexPokemon.toPrimitive());
   }
 }

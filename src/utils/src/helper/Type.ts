@@ -4,7 +4,7 @@ declare type MixedList<T> =
       [key: string]: T;
     };
 
-declare type Maybe<T> = T | undefined;
+declare type Maybe<T> = T | null;
 
 declare type ServerlessCompose = {
   services: {

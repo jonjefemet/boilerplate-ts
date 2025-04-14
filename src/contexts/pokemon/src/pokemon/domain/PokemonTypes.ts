@@ -9,6 +9,7 @@ export default class PokemonTypes extends Collection<PokemonType> {
   }
 
   private ensureDoNotHaveRepeatedTypes(...types: PokemonType[]): void {
+
     const uniqueTypes = new Set(types.map((item) => item.valueOf()));
 
     if (uniqueTypes.size !== types.length) {

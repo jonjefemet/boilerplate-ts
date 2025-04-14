@@ -22,6 +22,7 @@
     "build:utils": "nest build utils"
   },
   "dependencies": {
+    "@faker-js/faker": "^9.6.0",
     "@nestjs/common": "^11.0.1",
     "@nestjs/config": "^4.0.2",
     "@nestjs/core": "^11.0.1",
@@ -65,7 +66,7 @@
       "json",
       "ts"
     ],
-    "rootDir": "src",
+    "rootDir": "test",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
@@ -74,6 +75,13 @@
       "**/*.(t|j)s"
     ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+      "^@shared/(.*)$": "<rootDir>/../src/contexts/shared/src/$1",
+      "^@utils/(.*)$": "<rootDir>/../src/utils/src/$1",
+      "^@pokemon/(.*)$": "<rootDir>/../src/contexts/pokemon/src/$1",
+      "^@pokedex/(.*)$": "<rootDir>/../src/contexts/pokedex/src/$1",
+      "^@test/(.*)$": "<rootDir>/$1"
+    }
   }
 }
