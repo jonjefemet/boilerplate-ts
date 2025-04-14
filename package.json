@@ -15,9 +15,8 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "start:auth": "nest start --project auth",
-    "build:auth": "nest build --project auth",
-    "test:auth": "jest --config ./src/apps/auth/test/jest-e2e.json",
+    "start:pokedex-app": "nest start pokedex-app",
+    "build:pokedex-app": "nest build pokedex-app",
     "build:shared": "nest build shared",
     "build:utils": "nest build utils"
   },

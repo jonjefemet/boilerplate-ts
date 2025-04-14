@@ -4,6 +4,15 @@
   "sourceRoot": "src",
   "monorepo": true,
   "projects": {
+    "pokedex-app": {
+      "type": "application",
+      "root": "apps/pokedex-app",
+      "entryFile": "main",
+      "sourceRoot": "apps/pokedex-app/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/pokedex-app/tsconfig.app.json"
+      }
+    },
     "shared": {
       "type": "library",
       "root": "src/contexts/shared",
