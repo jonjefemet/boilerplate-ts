@@ -1,0 +1,10 @@
+# prometheus.yml
+global:
+  scrape_interval: 5s
+
+scrape_configs:
+  - job_name: 'pokedex_app'
+    metrics_path: /metrics
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['pokedex-app:3000']

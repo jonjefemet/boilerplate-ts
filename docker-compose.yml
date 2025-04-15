@@ -1,0 +1,28 @@
+services:
+
+  pokedex_app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      args:
+        APP_NAME: "pokedex-app"
+    container_name: pokedex_app
+    hostname: pokedex-app
+    ports:
+      - "3000:3000"
+    networks:
+      - app-network
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
