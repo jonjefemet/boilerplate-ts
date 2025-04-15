@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-for-in-array */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
+
 import Logger from '../log/Logger';
 import { v4 as uuid } from 'uuid';
 

@@ -3,7 +3,10 @@ import PokedexPokemonDescriptionMother from './PokedexPokemonDescriptionMother';
 import PokedexPokemonWeightMother from './PokedexPokemonWeightMother';
 import PokedexPokemonHeightMother from './PokedexPokemonHeightMother';
 import PokemonType from '@pokemon/pokemon/domain/PokemonType';
-import { PokedexPokemon, PokedexPokemonProps } from '@pokedex/pokemon/domain/PokedexPokemon';
+import {
+  PokedexPokemon,
+  PokedexPokemonProps,
+} from '@pokedex/pokemon/domain/PokedexPokemon';
 import CreatePokedexPokemonCommand from '@pokedex/pokemon/application/create/CreatePokedexPokemonCommand';
 import PokemonIdMother from '@test/contexts/pokemon/pokemon/domain/PokemonIdMother';
 import PokemonNameMother from '@test/contexts/pokemon/pokemon/domain/PokemonName';

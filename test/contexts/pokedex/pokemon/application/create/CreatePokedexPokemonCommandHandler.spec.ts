@@ -26,36 +26,36 @@ describe('CreatePokedexPokemonCommandHandler', () => {
     await handler.handle(command);
     mockPokedexPokemonRepository.assureSaveHasBeenCalledWith(pokedexPokemon);
   });
-  it('should throw an error if the pokemon weight is invalid', () => {
-    expect(() => {
+  it('should throw an error if the pokemon weight is invalid', async () => {
+    await expect(async () => {
       const command = CreatePokedexPokemonCommandMother.invalidWeight();
       const pokedexPokemon = PokedexPokemonMother.fromCommand(command);
-      handler.handle(command);
+      await handler.handle(command);
       mockPokedexPokemonRepository.assureSaveHasBeenCalledWith(pokedexPokemon);
-    }).toThrow(PokedexPokemonInvalidWeightException);
+    }).rejects.toThrow(PokedexPokemonInvalidWeightException);
   });
   it('should throw an error if the pokemon height is invalid', async () => {
-    expect(() => {
+    await expect(async () => {
       const command = CreatePokedexPokemonCommandMother.invalidHeight();
       const pokedexPokemon = PokedexPokemonMother.fromCommand(command);
-      handler.handle(command);
+      await handler.handle(command);
       mockPokedexPokemonRepository.assureSaveHasBeenCalledWith(pokedexPokemon);
-    }).toThrow(PokedexPokemonInvalidHeightException);
+    }).rejects.toThrow(PokedexPokemonInvalidHeightException);
   });
   it('should throw an error if types are invalid', async () => {
-    expect(() => {
+    await expect(async () => {
       const command = CreatePokedexPokemonCommandMother.invalidTypes();
       const pokedexPokemon = PokedexPokemonMother.fromCommand(command);
-      handler.handle(command);
+      await handler.handle(command);
       mockPokedexPokemonRepository.assureSaveHasBeenCalledWith(pokedexPokemon);
-    }).toThrow(InvalidPokemonTypeException);
+    }).rejects.toThrow(InvalidPokemonTypeException);
   });
   it('should throw an error if types are repeated', async () => {
-    expect(() => {
+    await expect(async () => {
       const command = CreatePokedexPokemonCommandMother.repeatedTypes();
       const pokedexPokemon = PokedexPokemonMother.fromCommand(command);
-      handler.handle(command);
+      await handler.handle(command);
       mockPokedexPokemonRepository.assureSaveHasBeenCalledWith(pokedexPokemon);
-    }).toThrow(PokemonTypesCannotBeRepeatedException);
+    }).rejects.toThrow(PokemonTypesCannotBeRepeatedException);
   });
 });

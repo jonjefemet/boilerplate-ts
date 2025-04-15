@@ -7,9 +7,9 @@ import Log from '@utils/decorators/Log';
 import PokemonId from '@pokemon/pokemon/domain/PokemonId';
 import { Maybe } from '@utils/helper/Type';
 
-
 export default class SearchPokedexPokemonQueryHandler
-  implements QueryHandler<SearchPokedexPokemonQuery, Maybe<PokedexPokemonResponse>>
+  implements
+    QueryHandler<SearchPokedexPokemonQuery, Maybe<PokedexPokemonResponse>>
 {
   constructor(
     private readonly pokedexPokemonSearcher: PokedexPokemonSearcher,
@@ -22,16 +22,15 @@ export default class SearchPokedexPokemonQueryHandler
   @Log()
   async handle(
     query: SearchPokedexPokemonQuery,
-  ): Promise<Maybe< PokedexPokemonResponse>> {
+  ): Promise<Maybe<PokedexPokemonResponse>> {
     const pokedexPokemon = await this.pokedexPokemonSearcher.search({
       pokemonId: new PokemonId(query.pokemonId),
     });
 
-    if ( !pokedexPokemon ) {
+    if (!pokedexPokemon) {
       return null;
     }
 
-    
     return PokedexPokemonResponse.create(pokedexPokemon.toPrimitive());
   }
 }
