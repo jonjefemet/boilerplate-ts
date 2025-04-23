@@ -22,6 +22,22 @@ services:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
     networks:
       - app-network
+  mongodb:
+    image: mongo:6.0
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 1234
+    volumes:
+      - mongodb-data:/data/db
+    networks:
+      - app-network
+
+volumes:
+  mongodb-data:
+
 
 networks:
   app-network:
