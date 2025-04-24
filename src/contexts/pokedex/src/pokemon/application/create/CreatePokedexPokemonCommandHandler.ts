@@ -12,7 +12,9 @@ import PokemonId from '@pokemon/pokemon/domain/PokemonId';
 import PokemonName from '@pokemon/pokemon/domain/PokemonName';
 import PokemonTypes from '@pokemon/pokemon/domain/PokemonTypes';
 import PokemonType from '@pokemon/pokemon/domain/PokemonType';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export default class CreatePokedexPokemonCommandHandler
   implements CommandHandler<CreatePokedexPokemonCommand>
 {

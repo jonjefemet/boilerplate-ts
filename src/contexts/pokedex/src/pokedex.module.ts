@@ -11,13 +11,8 @@ import {
 @Global()
 @Module({
   imports: [
-    /* ① Hace visible (y tipada) su config particular */
     ConfigModule.forFeature(pokedexConfig),
-
-    /* ② Conecta SOLO a la DB ‘pokedex’ */
     SharedModule.register(['pokedex']),
-
-    /* ③ Registra los modelos a esa conexión */
     MongooseModule.forFeature(
       [{ name: Pokemon.name, schema: PokemonSchema }],
       'pokedex',
