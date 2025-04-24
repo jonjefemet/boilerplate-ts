@@ -1,7 +1,8 @@
-// health-metrics/health.controller.ts
 import { Controller, Get, Res } from '@nestjs/common';
 import { FastifyReply } from 'fastify';
 import { Gauge, Histogram } from 'prom-client';
+import { InjectConnection } from '@nestjs/mongoose';
+import { Connection } from 'mongoose';
 
 const healthGauge = new Gauge({
   name: 'app_health_status',
@@ -16,17 +17,33 @@ const healthCheckLatency = new Histogram({
 
 @Controller('health')
 export class HealthController {
-  @Get()
-  checkHealth(@Res() reply: FastifyReply): void {
-    const endTimer = healthCheckLatency.startTimer();
+  constructor(
+    @InjectConnection('pokedex') private readonly dbConn: Connection,
+  ) {}
 
+  @Get()
+  async checkHealth(@Res() reply: FastifyReply): Promise<void> {
+    const endTimer = healthCheckLatency.startTimer();
     try {
+      if (this.dbConn.db) {
+        await this.dbConn.db.admin().ping();
+
+        const collections = await this.dbConn.db
+          .listCollections({}, { nameOnly: true })
+          .toArray();
+
+        if (collections.length === 0) {
+          throw new Error('No se encontraron colecciones en la base de datos');
+        }
+      } else {
+        throw new Error('La conexión a la base de datos es undefined');
+      }
       healthGauge.set(1);
-      reply.code(200).send({ status: 'UP' });
+      reply.code(200).send({ status: 'UP', collectionsCount: 'OK' });
     } catch (error) {
-      console.error('Error en la verificación de salud:', error);
+      console.error('Health check FAILED:', error);
       healthGauge.set(0);
-      reply.code(503).send({ status: 'DOWN' });
+      reply.code(503).send({ status: 'DOWN', reason: 'error' });
     } finally {
       endTimer();
     }
