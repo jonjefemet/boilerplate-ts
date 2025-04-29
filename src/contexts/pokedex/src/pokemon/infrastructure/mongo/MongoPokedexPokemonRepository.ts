@@ -5,9 +5,8 @@ import PokedexPokemonRepository from '@pokedex/pokemon/domain/PokedexPokemonRepo
 import PokemonId from '@pokemon/pokemon/domain/PokemonId';
 import Criteria from '@shared/domain/criteria/Criteria';
 import { Model } from 'mongoose';
-import { PokemonDocument } from './pokemon.schema';
+import { PokemonDocument, Pokemon } from './pokemon.schema';
 import { InjectModel } from '@nestjs/mongoose';
-import { Pokemon } from './pokemon.schema';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
@@ -29,15 +28,15 @@ export default class MongoPokedexPokemonRepository
 
   async save(pokemon: PokedexPokemon): Promise<void> {
     const { id, name, types, numberPokedex, description, height, weight } =
-      pokemon;
-
+      pokemon.toPrimitive();
     const pokemonDocument = new this.pokemonModel({
-      id: id.valueOf(),
-      name: name.valueOf(),
-      numberPokedex: numberPokedex.valueOf(),
-      description: description.valueOf(),
-      height: height.valueOf(),
-      weight: weight.valueOf(),
+      id,
+      name,
+      types,
+      numberPokedex,
+      description,
+      height,
+      weight,
     });
 
     await pokemonDocument.save();

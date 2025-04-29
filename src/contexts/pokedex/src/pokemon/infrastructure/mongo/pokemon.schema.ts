@@ -14,8 +14,17 @@ export class Pokemon {
   @Prop({ type: [String], index: true })
   types: string[];
 
-  @Prop({ min: 1 })
-  hp: number;
+  @Prop({ required: true, unique: true })
+  numberPokedex: number;
+
+  @Prop()
+  description: string;
+
+  @Prop()
+  height: number;
+
+  @Prop()
+  weight: number;
 }
 
 export const PokemonSchema = SchemaFactory.createForClass(Pokemon);
