@@ -1,8 +1,10 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, OnModuleInit } from '@nestjs/common';
 import { CommandBus } from '@shared/domain/bus/command/CommandBus';
-import { Command } from '@shared/domain/bus/command/Command';
 import { CommandHandler } from '@shared/domain/bus/command/CommandHandler';
+import { DiscoveryService } from '@nestjs/core';
+import { COMMAND_HANDLER_META } from '@shared/infrastructure/decorators/command-handler.decorator';
 
+type Constructorable<T = any> = new (...args: any[]) => T;
 /**
  * In‑memory implementation of the Command Bus.
  * Register this class (and all your CommandHandlers) as providers
@@ -10,37 +12,34 @@ import { CommandHandler } from '@shared/domain/bus/command/CommandHandler';
  * wherever you need to dispatch commands.
  */
 @Injectable()
-export default class InMemoryCommandBus implements CommandBus {
-  private readonly logger = new Logger(InMemoryCommandBus.name);
-  private readonly handlerMap: Map<Command, CommandHandler<Command>> =
-    new Map();
+export class InMemoryCommandBus implements CommandBus, OnModuleInit {
+  private readonly handlers = new Map<string, CommandHandler>();
 
-  /**
-   * All concrete CommandHandlers are injected automatically by NestJS.
-   * We build an internal lookup table (commandName → handler) once
-   * at application bootstrap.
-   */
-  constructor(handlers: CommandHandler<Command>[]) {
-    handlers.forEach((handler) => {
-      this.handlerMap.set(handler.subscribedTo(), handler);
-    });
+  constructor(private readonly discovery: DiscoveryService) {}
+
+  onModuleInit(): void {
+    const providers = this.discovery.getProviders();
+
+    providers
+      .filter((w) => {
+        const inst = w.instance as Constructorable | undefined;
+        return (
+          inst && Reflect.hasMetadata(COMMAND_HANDLER_META, inst.constructor)
+        );
+      })
+      .forEach((w) => {
+        const handler = w.instance as CommandHandler & Constructorable;
+        const command = Reflect.getMetadata(
+          COMMAND_HANDLER_META,
+          handler.constructor,
+        ) as { name: string };
+        this.handlers.set(command.name, handler);
+      });
   }
 
-  /**
-   * Dispatches a command to the appropriate handler.
-   *
-   * @throws Error if no handler is registered for the given command.
-   */
-  async dispatch(command: Command): Promise<void> {
-    const handler = this.handlerMap.get(command.constructor.name);
-
-    if (!handler) {
-      throw new Error(
-        `No CommandHandler registered for ${command.constructor.name}`,
-      );
-    }
-
-    this.logger.debug(`Dispatching ${command.constructor.name}`);
+  async dispatch(command: object): Promise<void> {
+    const handler = this.handlers.get(command.constructor.name);
+    if (!handler) throw new Error(`No handler for ${command.constructor.name}`);
     await handler.handle(command);
   }
 }

@@ -1,6 +1,4 @@
-import { CommandHandler } from '@shared/domain/bus/command/CommandHandler';
 import CreatePokedexPokemonCommand from './CreatePokedexPokemonCommand';
-import { Command } from '@shared/domain/bus/command/Command';
 import PokedexPokemonCreator from './PokedexPokemonCreator';
 
 import PokedexPokemonNumberPokedex from '../../domain/PokedexPokemonNumberPokedex';
@@ -12,17 +10,17 @@ import PokemonId from '@pokemon/pokemon/domain/PokemonId';
 import PokemonName from '@pokemon/pokemon/domain/PokemonName';
 import PokemonTypes from '@pokemon/pokemon/domain/PokemonTypes';
 import PokemonType from '@pokemon/pokemon/domain/PokemonType';
-import { Injectable } from '@nestjs/common';
 
-@Injectable()
+import { DecoratorCommandHandler } from '@shared/infrastructure/decorators/command-handler.decorator';
+import { CommandHandler } from '@shared/domain/bus/command/CommandHandler';
+
+@DecoratorCommandHandler(CreatePokedexPokemonCommand)
 export default class CreatePokedexPokemonCommandHandler
   implements CommandHandler<CreatePokedexPokemonCommand>
 {
   constructor(private readonly pokedexPokemonCreator: PokedexPokemonCreator) {}
 
-  subscribedTo(): Command {
-    return CreatePokedexPokemonCommand;
-  }
+  subscribedTo = () => CreatePokedexPokemonCommand;
 
   @Log()
   async handle(command: CreatePokedexPokemonCommand): Promise<void> {

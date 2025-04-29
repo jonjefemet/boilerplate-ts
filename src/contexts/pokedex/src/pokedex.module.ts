@@ -7,10 +7,16 @@ import {
   PokemonSchema,
   Pokemon,
 } from './pokemon/infrastructure/mongo/pokemon.schema';
+import { InMemoryCommandBus } from '@shared/infrastructure/bus/command/InMemoryCommandBus';
+import { DiscoveryModule } from '@nestjs/core';
+import CreatePokedexPokemonCommandHandler from './pokemon/application/create/CreatePokedexPokemonCommandHandler';
+import PokedexPokemonCreator from './pokemon/application/create/PokedexPokemonCreator';
+import MongoPokedexPokemonRepository from './pokemon/infrastructure/mongo/MongoPokedexPokemonRepository';
 
 @Global()
 @Module({
   imports: [
+    DiscoveryModule,
     ConfigModule.forFeature(pokedexConfig),
     SharedModule.register(['pokedex']),
     MongooseModule.forFeature(
@@ -18,5 +24,15 @@ import {
       'pokedex',
     ),
   ],
+  providers: [
+    InMemoryCommandBus,
+    CreatePokedexPokemonCommandHandler,
+    PokedexPokemonCreator,
+    {
+      provide: 'PokedexPokemonRepository',
+      useClass: MongoPokedexPokemonRepository,
+    },
+  ],
+  exports: [InMemoryCommandBus],
 })
 export class PokedexModule {}
