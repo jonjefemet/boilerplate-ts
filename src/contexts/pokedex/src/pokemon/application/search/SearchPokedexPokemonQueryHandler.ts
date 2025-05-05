@@ -1,12 +1,14 @@
 import { QueryHandler } from '@shared/domain/bus/query/QueryHandler';
 import SearchPokedexPokemonQuery from './SearchPokedexPokemonQuery';
-import { Query } from '@shared/domain/bus/query/Query';
 import PokedexPokemonSearcher from './PokedexPokemonSearcher';
 import PokedexPokemonResponse from '../PokedexPokemonResponse';
 import Log from '@utils/decorators/Log';
 import PokemonId from '@pokemon/pokemon/domain/PokemonId';
 import { Maybe } from '@utils/helper/Type';
 
+import { DecoratorQueryHandler } from '@shared/infrastructure/decorators/query-handler.decorator';
+
+@DecoratorQueryHandler(SearchPokedexPokemonQuery)
 export default class SearchPokedexPokemonQueryHandler
   implements
     QueryHandler<SearchPokedexPokemonQuery, Maybe<PokedexPokemonResponse>>
@@ -15,9 +17,7 @@ export default class SearchPokedexPokemonQueryHandler
     private readonly pokedexPokemonSearcher: PokedexPokemonSearcher,
   ) {}
 
-  subscribedTo(): Query {
-    return SearchPokedexPokemonQuery;
-  }
+  subscribedTo = () => SearchPokedexPokemonQuery;
 
   @Log()
   async handle(

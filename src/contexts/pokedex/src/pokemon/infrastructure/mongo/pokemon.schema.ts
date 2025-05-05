@@ -5,8 +5,8 @@ export type PokemonDocument = Pokemon & Document;
 
 @Schema({ collection: 'pokemons', timestamps: true })
 export class Pokemon {
-  @Prop({ required: true, unique: true })
-  id: number;
+  @Prop({ required: true })
+  _id: string;
 
   @Prop({ required: true })
   name: string;

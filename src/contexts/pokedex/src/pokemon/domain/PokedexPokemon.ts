@@ -4,6 +4,10 @@ import PokedexPokemonWeight from './PokedexPokemonWeight';
 import PokedexPokemonNumberPokedex from './PokedexPokemonNumberPokedex';
 import PokedexPokemonDescription from './PokedexPokemonDescription';
 import { Pokemon, PokemonProps } from '@pokemon/pokemon/domain/Pokemon';
+import PokemonId from '@pokemon/pokemon/domain/PokemonId';
+import PokemonName from '@pokemon/pokemon/domain/PokemonName';
+import PokemonTypes from '@pokemon/pokemon/domain/PokemonTypes';
+import PokemonType from '@pokemon/pokemon/domain/PokemonType';
 
 export class PokedexPokemon extends Pokemon {
   readonly numberPokedex: PokedexPokemonNumberPokedex;
@@ -34,6 +38,20 @@ export class PokedexPokemon extends Pokemon {
 
   static create(props: PokedexPokemonProps): PokedexPokemon {
     return new PokedexPokemon(props);
+  }
+
+  static fromPrimitives(props: Primitives<PokedexPokemon>): PokedexPokemon {
+    return new PokedexPokemon({
+      id: new PokemonId(props.id),
+      name: new PokemonName(props.name),
+      types: new PokemonTypes(
+        ...props.types.map((type) => PokemonType.from(type)),
+      ),
+      numberPokedex: new PokedexPokemonNumberPokedex(props.numberPokedex),
+      description: new PokedexPokemonDescription(props.description),
+      height: new PokedexPokemonHeight(props.height),
+      weight: new PokedexPokemonWeight(props.weight),
+    });
   }
 }
 

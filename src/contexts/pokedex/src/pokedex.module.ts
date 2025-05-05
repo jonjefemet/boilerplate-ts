@@ -12,6 +12,11 @@ import { DiscoveryModule } from '@nestjs/core';
 import CreatePokedexPokemonCommandHandler from './pokemon/application/create/CreatePokedexPokemonCommandHandler';
 import PokedexPokemonCreator from './pokemon/application/create/PokedexPokemonCreator';
 import MongoPokedexPokemonRepository from './pokemon/infrastructure/mongo/MongoPokedexPokemonRepository';
+import { CommandBus } from '@shared/domain/bus/command/CommandBus';
+import { InMemoryQueryBus } from '@shared/infrastructure/bus/query/InMemoryQueryBus';
+import { QueryBus } from '@shared/domain/bus/query/QueryBus';
+import SearchPokedexPokemonQueryHandler from './pokemon/application/search/SearchPokedexPokemonQueryHandler';
+import PokedexPokemonSearcher from './pokemon/application/search/PokedexPokemonSearcher';
 
 @Global()
 @Module({
@@ -26,13 +31,24 @@ import MongoPokedexPokemonRepository from './pokemon/infrastructure/mongo/MongoP
   ],
   providers: [
     InMemoryCommandBus,
-    CreatePokedexPokemonCommandHandler,
-    PokedexPokemonCreator,
+    {
+      provide: CommandBus,
+      useExisting: InMemoryCommandBus,
+    },
+    InMemoryQueryBus,
+    {
+      provide: QueryBus,
+      useExisting: InMemoryQueryBus,
+    },
     {
       provide: 'PokedexPokemonRepository',
       useClass: MongoPokedexPokemonRepository,
     },
+    SearchPokedexPokemonQueryHandler,
+    CreatePokedexPokemonCommandHandler,
+    PokedexPokemonSearcher,
+    PokedexPokemonCreator,
   ],
-  exports: [InMemoryCommandBus],
+  exports: [CommandBus, QueryBus],
 })
 export class PokedexModule {}

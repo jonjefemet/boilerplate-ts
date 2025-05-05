@@ -19,7 +19,21 @@ export default class MongoPokedexPokemonRepository
   ) {}
 
   async search(id: PokemonId): Promise<PokedexPokemon | null> {
-    return null;
+    const pokemonDocument = await this.pokemonModel.findById(id.valueOf());
+
+    if (!pokemonDocument) {
+      return null;
+    }
+
+    return PokedexPokemon.fromPrimitives({
+      id: pokemonDocument._id,
+      name: pokemonDocument.name,
+      types: pokemonDocument.types,
+      numberPokedex: pokemonDocument.numberPokedex,
+      description: pokemonDocument.description,
+      height: pokemonDocument.height,
+      weight: pokemonDocument.weight,
+    });
   }
 
   async matching(criteria: Criteria): Promise<PokedexPokemon[]> {
@@ -30,7 +44,7 @@ export default class MongoPokedexPokemonRepository
     const { id, name, types, numberPokedex, description, height, weight } =
       pokemon.toPrimitive();
     const pokemonDocument = new this.pokemonModel({
-      id,
+      _id: id,
       name,
       types,
       numberPokedex,
